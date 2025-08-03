@@ -12,9 +12,9 @@ jobs:
     environment: testing
     runs-on: ubuntu-latest
     # container: node:16
-    container:
+    # container:
       # image name
-      image: node:16
+      # image: node:16
       # env needed by the image itself 
       # env:
         # ASDF: EXAMPLE
@@ -24,7 +24,9 @@ jobs:
       # MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
       # MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
       MONGODB_CONNECTION_PROTOCOL: mongodb
-      MONGODB_CLUSTER_ADDRESS: mongodb # same as the service/service container name
+      # we would need to use the local host IP address 127.0.0.1:27017 instead of mongodb below as github actions will not automatically initialize a docker newtork if we do not define container above
+      # MONGODB_CLUSTER_ADDRESS: mongodb # same as the service/service container name
+      MONGODB_CLUSTER_ADDRESS: 127.0.0.1:27017
       MONGODB_USERNAME: root
       MONGODB_PASSWORD: example
       PORT: 8080
@@ -32,6 +34,9 @@ jobs:
     services:
       mongodb:
         image: mongo
+        # we need to open the default port from the service container to connect from the runner machine if we do not define the container
+        ports:
+          - 27017:27017
         env:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: example
