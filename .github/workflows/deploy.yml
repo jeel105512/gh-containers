@@ -11,6 +11,13 @@ jobs:
   test:
     environment: testing
     runs-on: ubuntu-latest
+    # container: node:16
+    container:
+      # image name
+      image: node:16
+      # env needed by the image itself 
+      # env:
+        # ASDF: EXAMPLE
     env:
       MONGODB_CONNECTION_PROTOCOL: mongodb+srv
       MONGODB_CLUSTER_ADDRESS: cluster0.4h1zmpb.mongodb.net
